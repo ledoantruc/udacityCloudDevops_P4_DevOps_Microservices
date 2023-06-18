@@ -45,6 +45,38 @@ source .devops/bin/activate
 ### Kubernetes Steps
 
 * Setup and Configure Docker locally
+    * Follow the guide to install Docker Engine: https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
+    * Verify installation by `docker --version` 
 * Setup and Configure Kubernetes locally
+    * Follow the guide to install minikube: https://minikube.sigs.k8s.io/docs/start/
+    * Note that have to install Docker before installing minikube
+    * Start minikube:
+        minikube config set driver docker
+        minikube start --driver=docker
+* Set up and Configure Kubernetes on AWS
+    * Install eksctl: https://github.com/weaveworks/eksctl/blob/main/README.md#installation
+    * Crete new EKS Cluster: 
+        eksctl create cluster --name EKS-Cluster-P4-ML --region=us-east-1
+        (have to export AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY beforing install eks via eksctl)
+        https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html
+    * Udate kube config file
+        aws eks update-kubeconfig --region us-east-1  --name EKS-Cluster-P4-ML
+        https://docs.aws.amazon.com/eks/latest/userguide/create-kubeconfig.html
 * Create Flask app in Container
+    * Build new image with all files for Flask app then start the container from this image
+        ./run_docker.sh
+    
 * Run via kubectl
+    * update kubeconfig then run scipt below
+        ./run_kubenetes.sh
+
+### Description of the files
+* app.py : the Flask app that use for predicting house pricing
+* Dockerfile: build container for Flask app above
+* make_prediction.sh: script to call Flask app
+* Makefile: instruction file to set up environment, install dependencies, test and lint
+* README.md: a text file that contains information for the users/ other developers about the project
+* requirements.txt: contains all dependencies
+* run_docker.sh: create image for Flask app, then run it locally
+* upload_docker.sh: tag image and push it to Docker hub
+* run_kubernetes.sh: create deployment for Flask app in Kubernetes
