@@ -1,1 +1,59 @@
 <paste log output from Kubernetes-mediated prediction, here>
+ldtruc@UD2204:~$ ./run_kubernetes.sh 
+deployment.apps/deployment-project-ml created
+NAME                                     READY   STATUS              RESTARTS   AGE
+deployment-project-ml-5994569bd8-9d56p   0/1     ContainerCreating   0          2s
+NAME                                     READY   STATUS    RESTARTS   AGE
+deployment-project-ml-5994569bd8-9d56p   1/1     Running   0          64s
+Forwarding from 127.0.0.1:8000 -> 80
+Forwarding from [::1]:8000 -> 80
+
+
+Handling connection for 8000
+Handling connection for 8000
+
+ldtruc@UD2204:~$ ./make_prediction.sh 
+Port: 8000
+{
+  "prediction": [
+    20.35373177134412
+  ]
+}
+
+ldtruc@UD2204:~$ kubectl get pods
+NAME                                     READY   STATUS    RESTARTS   AGE
+deployment-project-ml-5994569bd8-9d56p   1/1     Running   0          2m18s
+
+ldtruc@UD2204:~$ kubectl logs deployment-project-ml-5994569bd8-9d56p
+ * Serving Flask app "app" (lazy loading)
+ * Environment: production
+   WARNING: Do not use the development server in a production environment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:80/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 902-168-566
+[2023-06-18 12:22:46,123] INFO in app: JSON payload: 
+{'CHAS': {'0': 0}, 'RM': {'0': 6.575}, 'TAX': {'0': 296.0}, 'PTRATIO': {'0': 15.3}, 'B': {'0': 396.9}, 'LSTAT': {'0': 4.98}}
+[2023-06-18 12:22:46,134] INFO in app: Inference payload DataFrame: 
+   CHAS     RM    TAX  PTRATIO      B  LSTAT
+0     0  6.575  296.0     15.3  396.9   4.98
+[2023-06-18 12:22:46,141] INFO in app: Scaling Payload: 
+   CHAS     RM    TAX  PTRATIO      B  LSTAT
+0     0  6.575  296.0     15.3  396.9   4.98
+[2023-06-18 12:22:46,144] INFO in app: The scaled payload: [[0. 0. 0. 0. 0. 0.]]
+[2023-06-18 12:22:46,144] INFO in app: The prediction value: [20.35373177134412]
+127.0.0.1 - - [18/Jun/2023 12:22:46] "POST /predict HTTP/1.1" 200 -
+[2023-06-18 12:22:50,240] INFO in app: JSON payload: 
+{'CHAS': {'0': 0}, 'RM': {'0': 6.575}, 'TAX': {'0': 296.0}, 'PTRATIO': {'0': 15.3}, 'B': {'0': 396.9}, 'LSTAT': {'0': 4.98}}
+[2023-06-18 12:22:50,249] INFO in app: Inference payload DataFrame: 
+   CHAS     RM    TAX  PTRATIO      B  LSTAT
+0     0  6.575  296.0     15.3  396.9   4.98
+[2023-06-18 12:22:50,256] INFO in app: Scaling Payload: 
+   CHAS     RM    TAX  PTRATIO      B  LSTAT
+0     0  6.575  296.0     15.3  396.9   4.98
+[2023-06-18 12:22:50,258] INFO in app: The scaled payload: [[0. 0. 0. 0. 0. 0.]]
+[2023-06-18 12:22:50,259] INFO in app: The prediction value: [20.35373177134412]
+127.0.0.1 - - [18/Jun/2023 12:22:50] "POST /predict HTTP/1.1" 200 -
+ldtruc@UD2204:~$ 

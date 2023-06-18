@@ -17,6 +17,8 @@ kubectl create deploy deployment-project-ml --image="$dockerpath/$docker_image:$
 # Step 3:
 # List kubernetes pods
 kubectl get pods
+sleep 60
+kubectl get pods
 
 # Step 4:
 # Forward the container port to a host

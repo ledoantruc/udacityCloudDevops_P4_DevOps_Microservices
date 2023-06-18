@@ -34,3 +34,12 @@
 [2023-06-18 08:59:26,658] INFO in app: The scaled payload: [[0. 0. 0. 0. 0. 0.]]
 [2023-06-18 08:59:26,658] INFO in app: The prediction value: [20.35373177134412]
 172.17.0.1 - - [18/Jun/2023 08:59:26] "POST /predict HTTP/1.1" 200 -
+
+
+./make_prediction.sh 
+Port: 8000
+{
+  "prediction": [
+    20.35373177134412
+  ]
+}
