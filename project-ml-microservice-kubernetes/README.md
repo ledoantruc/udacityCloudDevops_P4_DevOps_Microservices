@@ -1,4 +1,5 @@
 <include a CircleCI status badge, here>
+[![ledoantruc](https://circleci.com/gh/ledoantruc/udacityCloudDevops_P4_DevOps_Microservices.svg?style=svg)](https://app.circleci.com/pipelines/github/ledoantruc/udacityCloudDevops_P4_DevOps_Microservices)
 
 ## Project Overview
 
